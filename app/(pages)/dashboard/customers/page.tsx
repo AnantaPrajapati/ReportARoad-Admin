@@ -1,17 +1,12 @@
-import getUsers from "@/app/lib/action";
+import { userData } from "@/app/lib/placeholder-data";
+import { userHeaders } from "@/app/lib/schema";
+import CustomTable from "@/components/ui/custom-table";
 
-export default async function Page() {
-    const users = await getUsers();
+export default  function Page() {
 
     return (
         <div>
-            {users.map((user: any) => (
-                <div key={user.id}>
-                    <span className="text-2xl p-3">
-                        {user.name}
-                    </span>
-                </div>
-            ))}
+          <CustomTable headers={userHeaders} tableData = {userData} />
         </div>
     );
 }
