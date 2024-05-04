@@ -1,17 +1,12 @@
-import getUsers from "@/app/lib/action";
+import { userHeaders, users } from "@/app/lib/placeholder-data";
+import DynamicTable from "@/components/ui/dynamic-table";
 
-export default async function Page() {
-    const users = await getUsers();
-
+export default function Page() {
+    const userRecords = users;
+    const headers = userHeaders;
     return (
         <div>
-            {users.map((user: any) => (
-                <div key={user.id}>
-                    <span className="text-2xl p-3">
-                        {user.name}
-                    </span>
-                </div>
-            ))}
+            <DynamicTable data={userRecords} headers={headers} />
         </div>
     );
 }
