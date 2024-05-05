@@ -1,22 +1,28 @@
-export const reportHeaders =
-    [
-        { "field": "uuid", "label": "UUID" },
-        { "field": "reportedBy", "label": "Reported By" },
-        { "field": "reportedDateTime", "label": "Reported Date/Time" },
-        { "field": "location", "label": "Location" },
-        { "field": "description", "label": "Description" },
-        { "field": "severity", "label": "Severity" },
-        { "field": "image", "label": "Image" },
-        { "field": "reportStatus", "label": "Report Status" },
-        { "field": "action", "label": "Action" }
-    ]
 
+    export type ReportHeader = {
+        [key: string] : string
+    }
+    
+    export const reportHeaders : ReportHeader = {
+        userId: 'Reported By',
+        createdAt: "Reported Date/Time",
+        location : "Location",
+        image: "Image",
+        severity: "Severity",
+        desc: "Description",
+        status: "Status",
+        action: "Action"
+    }
 
-export const userHeaders =
-    [
-        { "field": "username", "label": "Username" },
-        { "field": "email", "label": "Email" },
-        { "field": "role", "label": "Role" },
-        { "field": "uuid", "label": "UUID" },
-        { "field": "action", "label": "Action" }
-    ]
+export type UserHeader = {
+    [key: string]: string
+}
+
+export const userHeaders: UserHeader = {
+    _id: 'User ID',
+    email: 'Email',
+    role: 'Role',
+    citizenshipId: 'Citizenship ID',
+    action: "Action"
+}
+

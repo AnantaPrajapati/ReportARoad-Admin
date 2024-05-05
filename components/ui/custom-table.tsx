@@ -1,79 +1,80 @@
-import Image from "next/image";
+"use client"
+// Import types (assuming User and UserHeader are defined elsewhere)
 import { useState } from "react";
 
+// Import icons (assuming from react-icons)
+import { TbUserEdit } from "react-icons/tb";
+import { TiUserDeleteOutline } from "react-icons/ti";
+const roles: string[] = ['Admin', 'Manager', 'User'];
 
-export default function CustomTable(props: any) {
-  const { headers, tableData } = props;
-  const keys = Object.keys(tableData[0]);
-  const [data, setData] = useState(tableData);
-  const [editData, setEditData] = useState({});
-  const [isModal, setIsModal] = useState(false);
 
-  // const adminAction = [
-  //   { title : 'edit',
-  //     source : '/icons/edit-interface-icon-svgrepo-com.svg',
-  //     action : (uuid:any) => handleEdit(uuid),
-  //   },
-  //   { title : 'delete',
-  //     source : '/icons/delete-right-svgrepo-com.svg'
-  //   },
-  // ];
+export default function CustomTable({ data, headers }: { data: any; headers: any }) {
+    const [dialog, setDialog] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    if (!data.length) {
+        return <p>No records available</p>; // Simplified for clarity
+    }
 
-  // const handleEdit = (uuid: any) => {
-  //   setEditData(data.find((element: any) => element.uuid === uuid));
-  //   setIsModal(true);
-  // };
-  return (
-    <>
-      <table className="min-w-full divide-y divide-gray-200 border-2 border-r-5">
-        <thead className="bg-gray-50">
-          <tr>
-            {headers?.map((header: any) => (
-              <th
-                key={header.field}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                {header.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
+    // const editUser = (user: User) => {
+    //     console.log(user);
+    //     setSelectedUser(user);
+    //     setDialog(true);
+    // }
 
-        <tbody className="bg-white divide-y divide-gray-200">
-          {data?.map((data: any, index: number) => (
-            <tr
-              key={data?.uuid}
-              className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-            >
-              {keys?.map((ky) => (
-                <td key={ky} className="px-6 py-4 whitespace-nowrap">
-                  {data[ky]}
-                </td>
-              ))}
-              <td>
-                <span>
-                  <Image
-                    src="/icons/edit-interface-icon-svgrepo-com.svg"
-                    width={20}
-                    height={20}
-                    alt="edit icon"
-                    id="my_modal_1"
-                  />
-                </span>{" "}
-                <span>
-                  {" "}
-                  <Image
-                    src="/icons/delete-right-svgrepo-com.svg"
-                    width={20}
-                    height={20}
-                    alt="delete icon"
-                  />
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
+    const Dialog = ({ children, isOpen, onClose }: {
+        children: React.ReactNode,
+        isOpen: Boolean,
+        onClose: () => void
+
+    }) => {
+        return (
+            <div className={`fixed inset-0 z-50 flex items-center justify-center ${isOpen ? '' : 'hidden'}`}>
+                <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onClick={() => setDialog(false)}></div>
+                <div className="bg-white rounded-lg p-4 shadow-md opacity-90">
+                    {children}
+                </div>
+            </div>
+        );
+    };
+
+    const keys = Object.keys(headers);
+
+    return (
+        <div>
+
+            <table className="table-auto w-full">
+                <thead>
+                    <tr>
+                        {keys.map((key) => (
+                            <th key={key} className="px-4 py-2 text-left text-gray-700 bg-gray-200 border  border-gray-400">
+                                {headers[key]}
+                            </th>
+                        ))}
+                        <th className="px-4 py-2 text-left text-gray-700 bg-gray-200 border border-gray-400">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((dt:any) => (
+                        <tr key={dt._id} className="border border-gray-400 hover:bg-gray-100">
+                            {keys.map((key) => (
+                                <td key={key} className="px-4 py-2 text-left border border-gray-400">
+                                    {dt[key]}
+                                </td>
+                            ))}
+                            <td className="px-4 py-2 text-left border border-gray-400">
+                                <button className="hover:bg-gray-200 focus:outline-none">
+                                    <TbUserEdit size={20} />
+                                </button>
+                                <button className="hover:bg-gray-200 focus:outline-none ml-2">
+                                    <TiUserDeleteOutline size={20}  />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+           
+        </div>
+    );
 }

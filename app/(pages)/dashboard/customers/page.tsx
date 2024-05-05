@@ -10,7 +10,7 @@ export default function Page() {
     <div>
       <CustomTable
         headers={userHeaders}
-        tableData={userData}
+        data={userData}
       />
     </div>
   );
