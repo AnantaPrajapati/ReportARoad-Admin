@@ -7,7 +7,7 @@ import { TiUserDeleteOutline } from "react-icons/ti";
 const roles: string[] = ['Admin', 'Manager', 'User'];
 
 
-export default function CustomTable({ data, headers }: { data: any; headers: any }) {
+export default function DynamicTable({ data, headers }: { data: any; headers: any }) {
     const [dialog, setDialog] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     if (!data.length) {

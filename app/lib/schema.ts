@@ -26,3 +26,18 @@ export const userHeaders: UserHeader = {
     action: "Action"
 }
 
+export type ApprovedReportHeaders = {
+    [key: string] : string
+}
+
+export const approvedReportHeaders : ApprovedReportHeaders = {
+    userId: 'Reported By',
+    createdAt: "Reported Date/Time",
+    location : "Location",
+    image: "Image",
+    severity: "Severity",
+    desc: "Description",
+    status: "Status",
+    action: "Action"
+}
+
