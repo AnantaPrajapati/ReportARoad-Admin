@@ -14,12 +14,28 @@ export type UserHeader = {
 }
 
 export const userHeaders: UserHeader = {
-    fullName: 'Name',
-    username: 'Username',
+    uuid: 'User ID',
     email: 'Email',
     role: 'Role',
-    citizenshipId: 'Citizenship ID'
+    citizenshipId: 'Citizenship ID',
+    action: "Action"
 }
+
+export type ReportHeader = {
+    [key: string] : string
+}
+
+export const reportHeaders : ReportHeader = {
+    userId: 'Reported By',
+    createdAt: "Reported Date/Time",
+    location : "Location",
+    image: "Image",
+    severity: "Severity",
+    desc: "Description",
+    status: "Status",
+    action: "Action"
+}
+
 
 export const users: User[] = [
     {

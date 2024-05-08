@@ -1,9 +1,9 @@
-import Image from "next/image";
+import LoginPage from "@/components/ui/auth/LoginPage";
 
 export default function Home() {
   return (
-    <div>
-      Admin Panel
-    </div>
+    <main>
+      <LoginPage />
+    </main>
   );
 }
