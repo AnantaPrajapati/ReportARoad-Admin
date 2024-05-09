@@ -22,6 +22,7 @@ import {
   Pagination,
 } from "@/components/ui/pagination";
 import Image from "next/image";
+import ReportDialog from "@/components/ui/reports/dialog";
 
 export default function Page() {
   return (
@@ -95,8 +96,8 @@ export default function Page() {
               </TableCell>
               <TableCell>
                 <div className="flex justify-end gap-2">
-                  <Button variant="outline">Reject</Button>
-                  <Button>Approve</Button>
+                  <ReportDialog buttonLabel="Reject" />
+                  <ReportDialog buttonLabel="Approve" />
                 </div>
               </TableCell>
             </TableRow>
