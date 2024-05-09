@@ -5,6 +5,6 @@ export default async function Page(){
   const data = await getReports();
   console.log("reports", data);
   return (
-    <ReportTable/>
+    <ReportTable tableData={data}/>
   )
 } 

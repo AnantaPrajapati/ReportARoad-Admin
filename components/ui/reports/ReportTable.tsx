@@ -24,7 +24,9 @@ import {
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
 
-export default function ReportTable() {
+export default function ReportTable(props:any) {
+  const {tableData} = props;
+  console.log("props data are ",props.tableData)
   return (
     <div className="flex-1 bg-gray-100 dark:bg-gray-950 p-4 md:p-8 overflow-auto">
       <div className="border rounded-lg">
@@ -40,6 +42,22 @@ export default function ReportTable() {
           </TableHeader>
           <TableBody>
             <TableRow>
+              {tableData?.map((element:any) => (
+                <TableCell key={element?.userId}>
+                  {element?._id}
+                  {element?.desc}
+                  {element?.location}
+                  {element?.images}
+                  <div className="flex justify-end gap-2">
+                  <ReportDialog buttonLabel="Reject" />
+                  <ReportDialog buttonLabel="Approve" />
+                </div>
+
+                </TableCell>
+              ))}
+            </TableRow>
+
+            {/* <TableRow>
               <TableCell>123</TableCell>
               <TableCell>
                 Pothole on Main Street, causing damage to vehicles. Needs
@@ -95,198 +113,9 @@ export default function ReportTable() {
                 </div>
               </TableCell>
               <TableCell>
-                <div className="flex justify-end gap-2">
-                  <ReportDialog buttonLabel="Reject" />
-                  <ReportDialog buttonLabel="Approve" />
-                </div>
+
               </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>124</TableCell>
-              <TableCell>
-                Fallen tree blocking the road on Oak Street. Needs to be
-                removed.
-              </TableCell>
-              <TableCell>456 Oak Street, Anytown USA</TableCell>
-              <TableCell>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden md:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden lg:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline">Reject</Button>
-                  <Button>Approve</Button>
-                </div>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>125</TableCell>
-              <TableCell>
-                Broken streetlight on Elm Street, creating a safety hazard.
-                Needs to be repaired.
-              </TableCell>
-              <TableCell>789 Elm Street, Anytown USA</TableCell>
-              <TableCell>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden md:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden lg:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline">Reject</Button>
-                  <Button>Approve</Button>
-                </div>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>126</TableCell>
-              <TableCell>
-                Flooding on Maple Street, causing road closures. Needs to be
-                addressed.
-              </TableCell>
-              <TableCell>321 Maple Street, Anytown USA</TableCell>
-              <TableCell>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden md:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden lg:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline">Reject</Button>
-                  <Button>Approve</Button>
-                </div>
-              </TableCell>
-            </TableRow>
+            </TableRow> */}
           </TableBody>
         </Table>
         <div className="border-t px-4 py-2">
