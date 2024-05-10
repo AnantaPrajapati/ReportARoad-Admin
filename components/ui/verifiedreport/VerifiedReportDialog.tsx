@@ -8,8 +8,8 @@ import { DialogTrigger, DialogTitle, DialogHeader, DialogFooter, DialogContent, 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-export default function ReportDialog({ buttonLabel }: { buttonLabel: string }) {
-    const variant = buttonLabel === 'Approve' ? 'default' : 'destructive'
+export default function VerifiedReportDialog({ buttonLabel }: { buttonLabel: string }) {
+    const variant = buttonLabel === 'Update' ? 'default' : 'destructive'
     return (
         <Dialog>
             <DialogTrigger asChild>

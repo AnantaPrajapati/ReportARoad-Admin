@@ -10,7 +10,7 @@ export default function SideNav() {
                 <div className="flex h-[60px] items-center border-b px-6">
                     <Link className="flex items-center gap-2 font-semibold" href="#">
                         <Package2Icon className="h-6 w-6" />
-                        <span className="">Road Report</span>
+                        <span className="">ReportARoad</span>
                     </Link>
                     <Button className="ml-auto h-8 w-8" size="icon" variant="outline">
                         <BellIcon className="h-4 w-4" />
@@ -28,7 +28,7 @@ export default function SideNav() {
                         </Link>
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                            href="/dashboard/user"
+                            href="/dashboard/users"
                         >
                             <UsersIcon className="h-4 w-4" />
                             Users
@@ -46,6 +46,27 @@ export default function SideNav() {
                         >
                             <NewspaperIcon className="h-4 w-4" />
                             News
+                        </Link>
+                        <Link
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                            href="/dashboard/verifiedreport"
+                        >
+                            <FileTextIcon className="h-4 w-4" />
+                            Verified Report
+                        </Link>
+                        <Link
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                            href="/dashboard/ratingandfeedback"
+                        >
+                            <NewspaperIcon className="h-4 w-4" />
+                            Ratings and feedback
+                        </Link>
+                        <Link
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                            href="/dashboard/verifiedreport"
+                        >
+                            <NewspaperIcon className="h-4 w-4" />
+                            Manage Resources
                         </Link>
                     </nav>
                 </div>

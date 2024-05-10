@@ -23,8 +23,9 @@ import {
 } from "@/components/ui/pagination";
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
+import UserDialog from "./UserDialog";
 
-export default function ReportTable(props: any) {
+export default function UserTable(props: any) {
   const { tableData } = props;
   console.log("props data are ", tableData)
   return (
@@ -33,41 +34,32 @@ export default function ReportTable(props: any) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Report #</TableHead>
-              <TableHead>userId</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead>severity</TableHead>
-              <TableHead>status</TableHead>
-              <TableHead>Images</TableHead>
+              <TableHead>userID</TableHead>
+              <TableHead>FirstName</TableHead>
+              <TableHead>LastName</TableHead>
+              <TableHead>Username </TableHead>
+              <TableHead>E-mail</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>City</TableHead>
+              <TableHead>Verified</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
 
-
-            {tableData?.map((element: any) => (
+          {tableData.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
-                <TableCell>{element?.userId}</TableCell>
-                <TableCell>{element?.desc}</TableCell>
-                <TableCell>{element?.location}</TableCell>
-                <TableCell>{element?.severity}</TableCell>
-                <TableCell>{element?.status}</TableCell>
-                <TableCell>
-                  <div className="flex space-x-4">
-                    {element?.images && element.images.map((imageUrl: string, index: number) => (
-                      <div key={index}>
-                        <Image src={imageUrl} alt={`Image ${index}`} height={200} width={200} />
-                      </div>
-                    ))}
-                  </div>
-                </TableCell>
+                <TableCell>{element?.firstname}</TableCell>
+                <TableCell>{element?.lastname}</TableCell>
+                <TableCell>{element?.username}</TableCell>
+                <TableCell>{element?.email}</TableCell>
+                <TableCell>{element?.role}</TableCell>
+                <TableCell>{element?.city}</TableCell>
+                <TableCell>{element?.verified ? "true" : "false"}</TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                      <ReportDialog buttonLabel="Approve" />
-                    <ReportDialog buttonLabel="Reject" />
-                  
+                    <UserDialog buttonLabel="Delete" />
                   </div>
                 </TableCell>
               </TableRow>

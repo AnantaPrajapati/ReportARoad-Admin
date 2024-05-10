@@ -23,8 +23,9 @@ import {
 } from "@/components/ui/pagination";
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
+import VerifiedReportDialog from "./VerifiedReportDialog";
 
-export default function ReportTable(props: any) {
+export default function VerifiedReportTable(props: any) {
   const { tableData } = props;
   console.log("props data are ", tableData)
   return (
@@ -34,7 +35,6 @@ export default function ReportTable(props: any) {
           <TableHeader>
             <TableRow>
               <TableHead>Report #</TableHead>
-              <TableHead>userId</TableHead>
               <TableHead>Description</TableHead>
               <TableHead>Location</TableHead>
               <TableHead>severity</TableHead>
@@ -49,7 +49,6 @@ export default function ReportTable(props: any) {
             {tableData?.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
-                <TableCell>{element?.userId}</TableCell>
                 <TableCell>{element?.desc}</TableCell>
                 <TableCell>{element?.location}</TableCell>
                 <TableCell>{element?.severity}</TableCell>
@@ -58,16 +57,15 @@ export default function ReportTable(props: any) {
                   <div className="flex space-x-4">
                     {element?.images && element.images.map((imageUrl: string, index: number) => (
                       <div key={index}>
-                        <Image src={imageUrl} alt={`Image ${index}`} height={200} width={200} />
+                        <Image src={imageUrl} alt={`Image ${index}`} height={100} width={100} />
                       </div>
                     ))}
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                      <ReportDialog buttonLabel="Approve" />
-                    <ReportDialog buttonLabel="Reject" />
-                  
+                    <VerifiedReportDialog buttonLabel="Assign" />
+                    <VerifiedReportDialog buttonLabel="Update" />
                   </div>
                 </TableCell>
               </TableRow>

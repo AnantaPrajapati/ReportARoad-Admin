@@ -4,7 +4,7 @@ const ReportSchema =  new mongoose.Schema({
 
     userId: Object, 
     location:String,
-    images: String,      
+    images: [String],    
     severity: String,
     desc: String,
     status:  String,  

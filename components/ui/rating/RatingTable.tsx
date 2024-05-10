@@ -24,7 +24,7 @@ import {
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
 
-export default function ReportTable(props: any) {
+export default function RatingTable(props: any) {
   const { tableData } = props;
   console.log("props data are ", tableData)
   return (
@@ -33,13 +33,10 @@ export default function ReportTable(props: any) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Report #</TableHead>
+              <TableHead>Report Id</TableHead>
               <TableHead>userId</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead>severity</TableHead>
-              <TableHead>status</TableHead>
-              <TableHead>Images</TableHead>
+              <TableHead>Rating</TableHead>
+              <TableHead>Feedback</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -50,24 +47,12 @@ export default function ReportTable(props: any) {
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
                 <TableCell>{element?.userId}</TableCell>
-                <TableCell>{element?.desc}</TableCell>
-                <TableCell>{element?.location}</TableCell>
-                <TableCell>{element?.severity}</TableCell>
-                <TableCell>{element?.status}</TableCell>
-                <TableCell>
-                  <div className="flex space-x-4">
-                    {element?.images && element.images.map((imageUrl: string, index: number) => (
-                      <div key={index}>
-                        <Image src={imageUrl} alt={`Image ${index}`} height={200} width={200} />
-                      </div>
-                    ))}
-                  </div>
-                </TableCell>
+                <TableCell>{element?.rating}</TableCell>
+                <TableCell>{element?.feedback}</TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                      <ReportDialog buttonLabel="Approve" />
                     <ReportDialog buttonLabel="Reject" />
-                  
+                    <ReportDialog buttonLabel="Approve" />
                   </div>
                 </TableCell>
               </TableRow>
