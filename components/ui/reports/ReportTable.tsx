@@ -42,7 +42,7 @@ export default function ReportTable(props: any) {
       }
    }
 
-  console.log("props data are ", tableData, isPending)
+  // console.log("props data are ", tableData, isPending)
   return (
     <div className="flex-1 bg-gray-100 dark:bg-gray-950 p-4 md:p-8 overflow-auto">
       <div className="border rounded-lg">
