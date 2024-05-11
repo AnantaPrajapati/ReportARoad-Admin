@@ -8,12 +8,20 @@ import { DialogTrigger, DialogTitle, DialogHeader, DialogFooter, DialogContent, 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-export default function ReportDialog({ buttonLabel }: { buttonLabel: string }) {
+export default function ReportDialog({
+    buttonLabel,
+    onClick,
+}: {
+    buttonLabel: string;
+    onClick: () => void;
+    status:boolean
+}) {
     const variant = buttonLabel === 'Approve' ? 'default' : 'destructive'
+
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={variant}>{buttonLabel}</Button>
+                <Button variant={variant} onClick={onClick}>{buttonLabel}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -26,7 +34,9 @@ export default function ReportDialog({ buttonLabel }: { buttonLabel: string }) {
                     </div>
                 </div>
                 <DialogFooter className="justify-between">
-                    <Button variant={variant}>{buttonLabel}</Button>
+                    <Button variant={variant} onClick={onClick}>
+                        {buttonLabel}
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

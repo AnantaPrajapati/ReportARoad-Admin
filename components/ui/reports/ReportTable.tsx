@@ -1,3 +1,4 @@
+"use client"
 /**
  * v0 by Vercel.
  * @see https://v0.dev/t/bW7UMdyfsuD
@@ -23,10 +24,25 @@ import {
 } from "@/components/ui/pagination";
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
+import approveReport from "@/app/lib/action";
+import { useState, useTransition } from "react";
+
+
+
 
 export default function ReportTable(props: any) {
-  const { tableData } = props;
-  console.log("props data are ", tableData)
+  const { tableData } = props; 
+
+  const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(isPending)
+
+   const handleClose =()=>{
+      if(isPending){
+          setOpen(false);
+      }
+   }
+
+  console.log("props data are ", tableData, isPending)
   return (
     <div className="flex-1 bg-gray-100 dark:bg-gray-950 p-4 md:p-8 overflow-auto">
       <div className="border rounded-lg">
@@ -56,18 +72,26 @@ export default function ReportTable(props: any) {
                 <TableCell>{element?.status}</TableCell>
                 <TableCell>
                   <div className="flex space-x-4">
-                    {element?.images && element.images.map((imageUrl: string, index: number) => (
+                    {/* {element?.images && element.images.map((imageUrl: string, index: number) => (
                       <div key={index}>
                         <Image src={imageUrl} alt={`Image ${index}`} height={200} width={200} />
                       </div>
-                    ))}
+                    ))} */}
+              
+                      <div  >
+                        {element.images && element.images.length>0 &&
+                        <Image src={element?.images[0]} alt={`Image`} height={200} width={200} />
+                      }
+                      </div>
+   
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                      <ReportDialog buttonLabel="Approve" />
-                    <ReportDialog buttonLabel="Reject" />
-                  
+                    <ReportDialog buttonLabel="Approve" onClick={()=>startTransition(()=>approveReport(element?._id))} status={open}
+                     />
+                    {/* <ReportDialog buttonLabel="Reject" onClick={handleReject} /> */}
+
                   </div>
                 </TableCell>
               </TableRow>

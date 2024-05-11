@@ -51,8 +51,8 @@ export default function RatingTable(props: any) {
                 <TableCell>{element?.feedback}</TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <ReportDialog buttonLabel="Reject" />
-                    <ReportDialog buttonLabel="Approve" />
+                    {/* <ReportDialog buttonLabel="Reject" />
+                    <ReportDialog buttonLabel="Approve" /> */}
                   </div>
                 </TableCell>
               </TableRow>
