@@ -13,6 +13,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { headers } from "next/headers"
 import { useRouter } from "next/navigation"
+import { submit } from "@/models/action"
 
 export default function SignupPage() {
     const [firstname, setFirstname] = useState("");
@@ -28,40 +29,9 @@ export default function SignupPage() {
     const handleSubmit= async (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         try {
-            console.log("Submitting signup form...");
-            const resUserExits = await fetch('auth/models/userExist',{
-                method: "POST",
-                headers:{
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
-            });
-
-            const {user} = await resUserExits.json();
-
-            if(user){
-                console.log("User exists");
-                return;
-            }
-
-
-           const res = await fetch ('auth/models/action',{
-            method: "POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({
-                firstname,  lastname, username, email, password, cpassword, role, city
-            })
-        })
-
-        if(res.ok){
-           const form =e.target as HTMLFormElement;
-           form.reset();
-           router.push("/");
-        }else{
-            console.log("Signup failed:", res.statusText);
-        }
+            
+         await submit(email, firstname, lastname, username, password, cpassword, role, city);
+         router.push("/dashboard")
         } catch (error) {
             console.error("Error during signup:", error);
         }
@@ -130,8 +100,7 @@ export default function SignupPage() {
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="role">Role</Label>
-                            <Select defaultValue="user" required>
-                            {/* <Select value={role} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)} required> */}
+                            <Select  defaultValue="user" required>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select a role" />
                                 </SelectTrigger>
