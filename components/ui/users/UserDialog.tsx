@@ -5,27 +5,60 @@
  */
 import { Button } from "@/components/ui/button"
 import { DialogTrigger, DialogTitle, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
+import { useState } from 'react';
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
 
-export default function UserDialog({ buttonLabel }: { buttonLabel: string }) {
+export default function UserDialog({ buttonLabel,
+    onClick,
+    status,
+}: {
+    buttonLabel: string;
+    onClick: (comment: string) => void;
+    status: boolean;
+}) {
+    const [comment, setComment] = useState('');
+
+    const variant = buttonLabel === 'Approve' ? 'default' : 'destructive';
+
+    const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setComment(event.target.value);
+    };
+
+    const handleButtonClick = () => {
+        if (comment.trim() !== '') {
+            onClick(comment);
+        }
+    };
+
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="destructive">{buttonLabel}</Button>
+                <Button variant={variant}>{buttonLabel}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>{buttonLabel} User</DialogTitle>
+                    <DialogTitle>{buttonLabel} Report</DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                        <p>Are you sure, You want to delete this user?</p>
+                        <Label htmlFor="message">Message</Label>
+                        <Textarea
+                            className="min-h-[100px]"
+                            id="message"
+                            placeholder="Add a message"
+                            value={comment}
+                            onChange={handleCommentChange}
+                        />
                     </div>
                 </div>
                 <DialogFooter className="justify-between">
-                    <Button variant="destructive">{buttonLabel}</Button>
+                    <Button variant={variant} onClick={handleButtonClick}>
+                        {buttonLabel}
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
-    )
+    );
 }

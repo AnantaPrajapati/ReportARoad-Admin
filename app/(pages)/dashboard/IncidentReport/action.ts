@@ -1,18 +1,20 @@
 "use server"
+
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
-import { Signup } from "./schema";
-export async function getUsers () {
+import { IncidentReport } from "./schema";
+
+export async function getIncidentReports () {
     await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
-    const signups = await Signup.find();
-    // console.log(signups);
-    return signups;
+    const incidents = await IncidentReport.find(); 
+    // console.log(reports);
+    return incidents;
 }
 
-
-export default async function DeleteUser(_id: string, comment: string) {
+export default async function notifyUser(reportId: string, comment: string) {
+    // console.log('report');
 try{
-    const results = await fetch(`http://localhost:3000/DeleteUser?userId=${_id}`, {method: "POST",
+    const results = await fetch(`http://localhost:3000/notifyUser?userId=${reportId}`, {method: "POST",
     headers: {
         "Content-Type": "application/json",
       },

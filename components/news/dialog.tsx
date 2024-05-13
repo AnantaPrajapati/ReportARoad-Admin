@@ -30,7 +30,7 @@ export default function NewsDialog({
                         <Input type="text" className="" id="title" placeholder="News Title" />
 
                         <Label htmlFor="Description">News Detail</Label>
-                        <Textarea className="min-h-[100px]" id="Description" placeholder="News Details" />
+                        <Textarea className="min-h-[100px]" id="Description" placeholder="Description" />
 
                         <Label htmlFor="image">Title</Label>
                         <Input type="file" className="" id="image" />

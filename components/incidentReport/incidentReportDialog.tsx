@@ -4,7 +4,7 @@ import { DialogTrigger, DialogTitle, DialogHeader, DialogFooter, DialogContent, 
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 
-export default function ReportDialog({
+export default function IncidentReportDialog({
     buttonLabel,
     onClick,
     status,

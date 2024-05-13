@@ -13,3 +13,25 @@ export async function getVerifiedReports() {
         return [];
     }
 }
+export async function updateReport(reportId: string, newData: any) {
+    try {
+      const response = await fetch(`http://localhost:3000/updateReport?reportId=${reportId}`, {
+        method: "PUT", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newData), 
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to update report");
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error updating report:", error);
+      return null;
+    }
+  }
+  

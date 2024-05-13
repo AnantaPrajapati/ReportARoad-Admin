@@ -24,8 +24,9 @@ import {
 } from "@/components/ui/pagination";
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
-import approveReport from "@/app/lib/action";
+import approveReport, { disapproveReport } from "@/app/lib/action";
 import { useState, useTransition } from "react";
+import { comment } from "postcss";
 
 
 
@@ -88,9 +89,9 @@ export default function ReportTable(props: any) {
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <ReportDialog buttonLabel="Approve" onClick={()=>startTransition(()=>approveReport(element?._id))} status={open}
+                    <ReportDialog buttonLabel="Approve" onClick={(comment)=>startTransition(()=>approveReport(element?._id, comment))} status={open}
                      />
-                    {/* <ReportDialog buttonLabel="Reject" onClick={handleReject} /> */}
+                    <ReportDialog  buttonLabel="Reject" onClick={(comment)=>startTransition(()=>disapproveReport(element?._id, comment))} status={open}/>
 
                   </div>
                 </TableCell>
