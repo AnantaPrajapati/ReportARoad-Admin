@@ -69,7 +69,16 @@ export default function IncidentReportTable(props: any) {
                 <TableCell>{element?._id}</TableCell>
                 <TableCell>{element?.userId}</TableCell>
                 <TableCell>{element?.desc}</TableCell>
-                <TableCell>{element?.location}</TableCell>
+                <TableCell>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(element?.location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'blue', textDecoration: 'underline' }}
+                  >
+                    {element?.location}
+                  </a>
+                </TableCell>
                 <TableCell>{element?.title}</TableCell>
                 <TableCell>{element?.image}</TableCell>
                 <TableCell>

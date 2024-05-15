@@ -50,7 +50,16 @@ export default function VerifiedReportTable(props: any) {
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
                 <TableCell>{element?.desc}</TableCell>
-                <TableCell>{element?.location}</TableCell>
+                <TableCell>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(element?.location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'blue', textDecoration: 'underline' }}
+                  >
+                    {element?.location}
+                  </a>
+                </TableCell>
                 <TableCell>{element?.severity}</TableCell>
                 <TableCell>{element?.status}</TableCell>
                 <TableCell>

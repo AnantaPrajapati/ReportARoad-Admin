@@ -32,16 +32,16 @@ import { comment } from "postcss";
 
 
 export default function ReportTable(props: any) {
-  const { tableData } = props; 
+  const { tableData } = props;
 
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(isPending)
 
-   const handleClose =()=>{
-      if(isPending){
-          setOpen(false);
-      }
-   }
+  const handleClose = () => {
+    if (isPending) {
+      setOpen(false);
+    }
+  }
 
   // console.log("props data are ", tableData, isPending)
   return (
@@ -68,7 +68,16 @@ export default function ReportTable(props: any) {
                 <TableCell>{element?._id}</TableCell>
                 <TableCell>{element?.userId}</TableCell>
                 <TableCell>{element?.desc}</TableCell>
-                <TableCell>{element?.location}</TableCell>
+                <TableCell>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(element?.location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'blue', textDecoration: 'underline' }}
+                  >
+                    {element?.location}
+                  </a>
+                </TableCell>
                 <TableCell>{element?.severity}</TableCell>
                 <TableCell>{element?.status}</TableCell>
                 <TableCell>
@@ -78,20 +87,20 @@ export default function ReportTable(props: any) {
                         <Image src={imageUrl} alt={`Image ${index}`} height={200} width={200} />
                       </div>
                     ))} */}
-              
-                      <div  >
-                        {element.images && element.images.length>0 &&
+
+                    <div  >
+                      {element.images && element.images.length > 0 &&
                         <Image src={element?.images[0]} alt={`Image`} height={200} width={200} />
                       }
-                      </div>
-   
+                    </div>
+
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <ReportDialog buttonLabel="Approve" onClick={(comment)=>startTransition(()=>approveReport(element?._id, comment))} status={open}
-                     />
-                    <ReportDialog  buttonLabel="Reject" onClick={(comment)=>startTransition(()=>disapproveReport(element?._id, comment))} status={open}/>
+                    <ReportDialog buttonLabel="Approve" onClick={(comment) => startTransition(() => approveReport(element?._id, comment))} status={open}
+                    />
+                    <ReportDialog buttonLabel="Reject" onClick={(comment) => startTransition(() => disapproveReport(element?._id, comment))} status={open} />
 
                   </div>
                 </TableCell>

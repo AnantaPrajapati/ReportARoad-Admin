@@ -9,10 +9,11 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function Page() {
-  const initialData: { title: string; description: string; image: string } = {
+  const initialData: { title: string; description: string; image: string, location: String} = {
     title: "",
     description: "",
     image: "",
+    location: "",
   };
   const [data, setData] = useState(initialData);
   const [newsData, setNewsData] = useState([]);
@@ -21,7 +22,7 @@ export default function Page() {
     e.preventDefault();
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-  };
+  }; 
 
   const handleAdd = () => {
     

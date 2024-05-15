@@ -1,9 +1,5 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/F2TL4bjscaC
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
-import { Button } from "@/components/ui/button";
+import { useState, ChangeEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   DialogTrigger,
   DialogTitle,
@@ -11,10 +7,14 @@ import {
   DialogFooter,
   DialogContent,
   Dialog,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { upload } from '../ImageUpload/page';
+import createNews from '@/app/(pages)/dashboard/news/action';
+import { useRouter } from 'next/router';
 
 export default function NewsDialog({
   buttonLabel,
@@ -24,17 +24,67 @@ export default function NewsDialog({
   setNewsData,
   handleChange,
   handleAdd,
-} :
-{
-    buttonLabel : string,
-    data : object,
-    setData : any,
-    newsData : any,
-    setNewsData : any,
-    handleChange : (e:any) =>  void,
-    handleAdd : (e:any) => void
-
+}: {
+  buttonLabel: string,
+  data: object,
+  setData: any,
+  newsData: any,
+  setNewsData: any,
+  handleChange: (e: any) => void,
+  handleAdd: (e: any) => void
 }) {
+  const [file, setFile] = useState<File | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [location, setLocation] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  // const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (!fileUrl) {
+        console.error("No file uploaded");
+        return;
+      }
+
+      await createNews(title, fileUrl, description, location);
+      // Clear all fields and show success message
+      setTitle("");
+      setDescription("");
+      setImage("");
+      setLocation("");
+      setFile(null);
+      setFileUrl(null);
+      setSuccessMessage("News created successfully");
+
+      // Redirect to news section
+      // router.push("/dashboard/news");
+
+    } catch (error) {
+      console.error("Error during news creation:", error);
+      // You can handle errors here, e.g., display an error message
+    }
+  };
+
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const fileUrl = await upload(selectedFile);
+      setFile(selectedFile);
+      setFileUrl(fileUrl);
+    } else {
+      console.log("No file selected");
+    }
+  };
+
+  const handleFileClear = () => {
+    setFile(null);
+    setFileUrl(null);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -44,30 +94,61 @@ export default function NewsDialog({
         <DialogHeader>
           <DialogTitle>{buttonLabel}</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid gap-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              type="text"
-              className=""
-              id="title"
-              placeholder="News Title"
-            />
+        <form onSubmit={handleSubmit}>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                type="text"
+                className=""
+                id="title"
+                placeholder="News Title"
+              />
 
-            <Label htmlFor="Description">News Detail</Label>
-            <Textarea
-              className="min-h-[100px]"
-              id="Description"
-              placeholder="Description"
-            />
+              <Label htmlFor="title">Location</Label>
+              <Input
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                type="text"
+                className=""
+                id="location"
+                placeholder="Location"
+              />
 
-            <Label htmlFor="image">Title</Label>
-            <Input type="file" className="" id="image" />
+              <Label htmlFor="Description">News Detail</Label>
+              <Input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="min-h-[100px]"
+                id="Description"
+                placeholder="Description"
+              />
+
+              <Label htmlFor="image">Upload Image</Label>
+              <Input type="file" accept="image/*, video/*" className="" id="file" onChange={(e) => { setImage(e.target.value); handleFileUpload(e); }} />
+              {fileUrl && file && (
+                <div style={{ position: 'relative' }}>
+                  <button className="absolute top-2 right-2" onClick={handleFileClear}>
+                    <AiOutlineCloseCircle size={24} />
+                  </button>
+                  {file.type.startsWith('image') ? (
+                    <img src={fileUrl} alt="Selected" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                  ) : (
+                    <video src={fileUrl} controls style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        <DialogFooter className="justify-between">
-          <Button>{buttonLabel}</Button>
-        </DialogFooter>
+          <DialogFooter className="justify-between">
+            <Button>{buttonLabel} </Button>
+          </DialogFooter>
+        </form>
+        {successMessage && (
+          <div className="text-green-600">{successMessage}</div>
+        )}
       </DialogContent>
     </Dialog>
   );
