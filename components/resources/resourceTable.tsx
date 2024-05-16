@@ -1,3 +1,4 @@
+"use client"
 /**
  * v0 by Vercel.
  * @see https://v0.dev/t/bW7UMdyfsuD
@@ -23,25 +24,40 @@ import {
 } from "@/components/ui/pagination";
 import Image from "next/image";
 import ReportDialog from "@/components/ui/reports/dialog";
-import VerifiedReportDialog from "./VerifiedReportDialog";
-import UpdateDialog from "./UpdateReportDialog";
-import AssignReportDialog from "./AssignReport";
+import approveReport, { disapproveReport } from "@/app/lib/action";
+import { useState, useTransition } from "react";
+import { comment } from "postcss";
+import notifyUser from "@/app/(pages)/dashboard/IncidentReport/action";
+import ResourceDialog from "./resourceDialog";
 
-export default function VerifiedReportTable(props: any) {
-  const { tableData } = props;
-  // console.log("props data are ", tableData)
+
+
+
+export default function ResourceTable(props: any) {
+  const { tableData } = props; 
+
+  const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(isPending)
+
+   const handleClose =()=>{
+      if(isPending){
+          setOpen(false);
+      }
+   }
+
+  // console.log("props data are ", tableData, isPending)
   return (
     <div className="flex-1 bg-gray-100 dark:bg-gray-950 p-4 md:p-8 overflow-auto">
       <div className="border rounded-lg">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Report #</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead>severity</TableHead>
-              <TableHead>status</TableHead>
-              <TableHead>Images</TableHead>
+              <TableHead>Report</TableHead>
+              <TableHead>Manpower</TableHead>
+              <TableHead>Budget</TableHead>
+              <TableHead>Time</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Image</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -51,8 +67,9 @@ export default function VerifiedReportTable(props: any) {
             {tableData?.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
-                <TableCell>{element?.desc}</TableCell>
-                <TableCell>
+                <TableCell>{element?.manpower}</TableCell>
+                <TableCell>{element?.budget}</TableCell>
+                {/* <TableCell>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(element?.location)}`}
                     target="_blank"
@@ -61,23 +78,23 @@ export default function VerifiedReportTable(props: any) {
                   >
                     {element?.location}
                   </a>
-                </TableCell>
-                <TableCell>{element?.severity}</TableCell>
+                </TableCell> */}
+                <TableCell>{element?.time}</TableCell>
                 <TableCell>{element?.status}</TableCell>
+                {/* <TableCell>{element?.image}</TableCell> */}
                 <TableCell>
                   <div className="flex space-x-4">
-                  <div  >
-                      {element.images && element.images.length > 0 &&
-                        <Image src={element?.images[0]} alt={`Image`} height={200} width={200} />
+                      <div  >
+                        {element.image && element.image.length>0 &&
+                        <Image src={element?.image} alt={`Image`} height={200} width={200} />
                       }
-                    </div>
+                      </div>
+   
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <AssignReportDialog buttonLabel="Assign" />
-                    <UpdateDialog buttonLabel="Update" reportId={element?._id} />
-
+                  <ResourceDialog buttonLabel="Update" reportId={element?._id} />
                   </div>
                 </TableCell>
               </TableRow>

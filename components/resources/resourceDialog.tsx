@@ -13,23 +13,25 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { upload } from '../ImageUpload/page';
 import createNews, { getNews } from '@/app/(pages)/dashboard/news/action';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { upload } from '@/components/ImageUpload/page';
+import { updateReport, updateResourceReport } from '@/app/(pages)/dashboard/verifiedreport/action';
 
-export default function NewsDialog({
+export default function ResourceDialog({
   buttonLabel,
+  reportId, 
 }: {
   buttonLabel: string,
+  reportId: string,
+
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [time, setTime] = useState("");
   const [image, setImage] = useState("");
-  const [location, setLocation] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,22 +40,20 @@ export default function NewsDialog({
         console.error("No file uploaded");
         return;
       }
+      const newData = {time, images:fileUrl, }
 
-      await createNews(title, fileUrl, description, location);
-      setTitle("");
-      setDescription("");
+      await updateResourceReport(reportId, newData);
+      setTime("");
       setImage("");
-      setLocation("");
       setFile(null);
       setFileUrl(null);
-      setSuccessMessage("News created successfully");
+      setSuccessMessage("Report updated successfully");
 
       // Redirect to news section
-      window.location.reload();
+      // router.push("/dashboard/news");
 
     } catch (error) {
       console.error("Error during news creation:", error);
-      // You can handle errors here, e.g., display an error message
     }
   };
 
@@ -85,7 +85,7 @@ export default function NewsDialog({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="title">Title</Label>
+              {/* <Label htmlFor="title">Description</Label>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -95,7 +95,7 @@ export default function NewsDialog({
                 placeholder="News Title"
               />
 
-              <Label htmlFor="title">Location</Label>
+              <Label htmlFor="title">Image</Label>
               <Input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -103,15 +103,15 @@ export default function NewsDialog({
                 className=""
                 id="location"
                 placeholder="Location"
-              />
+              /> */}
 
-              <Label htmlFor="Description">News Detail</Label>
+              <Label htmlFor="Time">Time</Label>
               <Input
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="min-h-[100px]"
-                id="Description"
-                placeholder="Description"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className=""
+                id="Time"
+                placeholder="Time"
               />
 
               <Label htmlFor="image">Upload Image</Label>
@@ -135,7 +135,7 @@ export default function NewsDialog({
           </DialogFooter>
         </form>
         {successMessage && (
-          <div className="text-green-600">{successMessage}</div>
+          <div className="text-blue-600">{successMessage}</div>
         )}
       </DialogContent>
     </Dialog>

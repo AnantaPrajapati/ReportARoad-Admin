@@ -2,10 +2,10 @@
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { News } from "./schema";
-export async function getNews () {
+export async function getNews() {
     await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
     const news = await News.find();
-    // console.log(signups);
+    // console.log("news are", news);
     return news;
 }
 

@@ -80,7 +80,7 @@ export default function IncidentReportTable(props: any) {
                   </a>
                 </TableCell>
                 <TableCell>{element?.title}</TableCell>
-                <TableCell>{element?.image}</TableCell>
+                {/* <TableCell>{element?.image}</TableCell> */}
                 <TableCell>
                   <div className="flex space-x-4">
                     {/* {element?.images && element.images.map((imageUrl: string, index: number) => (
@@ -91,7 +91,7 @@ export default function IncidentReportTable(props: any) {
               
                       <div  >
                         {element.image && element.image.length>0 &&
-                        <Image src={element?.image} alt={`Image`} height={200} width={200} />
+                        <Image src={element?.image} alt={`Image`} height={1000} width={1000} />
                       }
                       </div>
    

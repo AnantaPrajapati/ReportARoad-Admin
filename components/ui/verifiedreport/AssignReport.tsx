@@ -13,37 +13,42 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { upload } from '../ImageUpload/page';
 import createNews, { getNews } from '@/app/(pages)/dashboard/news/action';
 import { useRouter } from 'next/navigation';
+import { upload } from '@/components/ImageUpload/page';
+import AssignReport from '@/app/(pages)/dashboard/verifiedreport/action';
 
-export default function NewsDialog({
+export default function AssignReportDialog({
   buttonLabel,
 }: {
   buttonLabel: string,
 }) {
   const [file, setFile] = useState<File | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [location, setLocation] = useState("");
+  const [image, setFileUrl] = useState<string | null>(null);
+  const [manpower, setManpower] = useState("");
+  const [budget, setBudget] = useState("");
+  const [time, setTime] = useState("");
+  const [status, setStatus] = useState("");
+  // const [image, setImage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (!fileUrl) {
+      if (!image) {
         console.error("No file uploaded");
         return;
       }
+      
 
-      await createNews(title, fileUrl, description, location);
-      setTitle("");
-      setDescription("");
-      setImage("");
-      setLocation("");
+
+      await AssignReport(manpower, budget, time, status, image );
+      setManpower("");
+      setBudget("");
+      setFileUrl("");
+      setTime("");
+      setStatus("");
       setFile(null);
       setFileUrl(null);
       setSuccessMessage("News created successfully");
@@ -53,7 +58,6 @@ export default function NewsDialog({
 
     } catch (error) {
       console.error("Error during news creation:", error);
-      // You can handle errors here, e.g., display an error message
     }
   };
 
@@ -85,46 +89,55 @@ export default function NewsDialog({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="title">Title</Label>
+              <Label htmlFor="title">Manpower</Label>
               <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={manpower}
+                onChange={(e) => setManpower(e.target.value)}
                 type="text"
                 className=""
-                id="title"
-                placeholder="News Title"
+                id="Manpower"
+                placeholder="Manpower"
               />
 
-              <Label htmlFor="title">Location</Label>
+              <Label htmlFor="Budget">Budget</Label>
               <Input
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
                 type="text"
                 className=""
-                id="location"
-                placeholder="Location"
+                id="Budget"
+                placeholder="Budget"
               />
-
-              <Label htmlFor="Description">News Detail</Label>
+              <Label htmlFor="Time">Time</Label>
               <Input
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="min-h-[100px]"
-                id="Description"
-                placeholder="Description"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                type="text"
+                className=""
+                id="Time"
+                placeholder="Time"
+              />
+              <Label htmlFor="Status">Status</Label>
+              <Input
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                type="text"
+                className=""
+                id="Status"
+                placeholder="Status"
               />
 
               <Label htmlFor="image">Upload Image</Label>
-              <Input type="file" accept="image/*, video/*" className="" id="file" onChange={(e) => { setImage(e.target.value); handleFileUpload(e); }} />
-              {fileUrl && file && (
+              <Input type="file" accept="image/*, video/*" className="" id="file" onChange={(e) => { setFileUrl(e.target.value); handleFileUpload(e); }} />
+              {image && file && (
                 <div style={{ position: 'relative' }}>
                   <button className="absolute top-2 right-2" onClick={handleFileClear}>
                     <AiOutlineCloseCircle size={24} />
                   </button>
                   {file.type.startsWith('image') ? (
-                    <img src={fileUrl} alt="Selected" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                    <img src={image} alt="Selected" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                   ) : (
-                    <video src={fileUrl} controls style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                    <video src={image} controls style={{ maxWidth: '100%', maxHeight: '200px' }} />
                   )}
                 </div>
               )}
@@ -135,7 +148,7 @@ export default function NewsDialog({
           </DialogFooter>
         </form>
         {successMessage && (
-          <div className="text-green-600">{successMessage}</div>
+          <div className="text-Blue-600">{successMessage}</div>
         )}
       </DialogContent>
     </Dialog>
