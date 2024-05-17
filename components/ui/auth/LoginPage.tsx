@@ -12,8 +12,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage(props: any) {
+export default function LoginPage(props: any) { 
   const { loginData } = props;
+  console.log("loginData are", loginData);
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
