@@ -6,9 +6,9 @@
 import NewsDialog from "@/components/news/dialog";
 import Image from "next/image";
 import { getNews } from "./action";
-import { useEffect } from "react";
-import mongoose from "mongoose";
-import { News } from "./schema";
+// import { useEffect } from "react";
+// import mongoose from "mongoose";
+// import { News } from "./schema";
 
 export default async function Page() {
   // const [data, setData] = useState();
