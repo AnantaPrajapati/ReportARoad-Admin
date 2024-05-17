@@ -6,6 +6,8 @@ const SignupSchema =  new mongoose.Schema({
     lastname: String,
     username: String,
     email: String,
+    password:String,
+    Cpassword:String,
     role: String,
     city: String,
     verified: Boolean,

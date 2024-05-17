@@ -1,7 +1,7 @@
-"use server"
 import { Report } from "@/app/lib/schema";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
+import { Signup } from "../(pages)/dashboard/users/schema";
 
 export async function getReports () {
     await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
@@ -48,5 +48,17 @@ try{
   } catch (error) {
     console.error("Error fetching data:", error);
     return null; 
+  }
+}
+
+export async function loginValidation(email:string,password:string) {
+  await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
+  const user:any = await Signup.findOne({ email: email }); 
+  if(!user)
+    return null;
+  if(user?.password === password){
+    return user;
+  }else{
+    return null;
   }
 }

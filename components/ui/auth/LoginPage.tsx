@@ -9,37 +9,29 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { loginValidation } from "@/app/lib/action";
 
-export default function LoginPage(props: any) { 
+export default function LoginPage(props: any) {
   const { loginData } = props;
-  console.log("loginData are", loginData);
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  // const email = "admin@gmail.com";
-  // const password = "helloworld";
-  const[data , setData] = useState({});
 
-  useEffect(()=>{
-    const userRoles = loginData?.find((element: any) => {
-      element?.role === "Admin" || "Government"
-      return element
-    });
-    setData(userRoles);
-  },[loginData])
+
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    
-    // if (formData.email === data?.email && formData.password === data?.password) {
-    //   router.push("/dashboard");
-    // } else {
-    //   alert("inavlid email or password");
-    // }
+    const usr = loginValidation(formData.email,formData.password);
+    if(!usr){
+      console.error("Invalid Email or Passwords!!")
+    }else{
+      alert("Logged in Successfully!!")
+      router.push("/dashboard");
+    }
   };
 
   const handleChange = (e: any) => {
