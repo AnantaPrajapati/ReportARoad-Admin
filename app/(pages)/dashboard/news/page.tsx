@@ -13,7 +13,7 @@ import { News } from "./schema";
 export default async function Page() {
   // const [data, setData] = useState();
   const news = await getNews();
-  
+
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-8 md:px-6 md:py-12">
@@ -31,40 +31,40 @@ export default async function Page() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {news?.map((element) => (
-        <div className="bg-white rounded-lg overflow-hidden shadow-sm dark:bg-gray-950" key={element?._id}>
-          {String(element?.image).includes('.png') && (
- <Image
-            alt="News Image"
-            className="w-full h-48 object-cover"
-            height={400}
-            src={element?.image}
-            style={{
-              aspectRatio: "600/400",
-              objectFit: "cover",
-            }}
-            width={600}
-          />
-          )}
-          {String(element?.image).includes('.mov')  && (
-            <video src={element.image} controls height={400}
-            style={{
-              aspectRatio: "500/270",
-              objectFit: "contain",
-            }}
-            width={600}></video>
-          )}
+        {news?.map((element) => (
+          <div className="bg-white rounded-lg overflow-hidden shadow-sm dark:bg-gray-950" key={element?._id}>
+            {String(element?.image).includes('.jpg' || ".png") && (
+              <Image
+                alt="News Image"
+                className="w-full h-48 object-cover"
+                height={400}
+                src={element?.image}
+                style={{
+                  aspectRatio: "600/400",
+                  objectFit: "cover",
+                }}
+                width={600}
+              />
+            )}
+            {String(element?.image).includes('.mov') && (
+              <video src={element.image} controls height={400}
+                style={{
+                  aspectRatio: "500/270",
+                  objectFit: "contain",
+                }}
+                width={600}></video>
+            )}
 
-         
-          <div className="p-4">
-            <h3 className="text-lg font-semibold mb-2">
-              {element?.title}
-            </h3>
-            <p className="text-gray-500 dark:text-gray-400 line-clamp-2">
-              {element?.desc}
-            </p>
-          </div>
-        </div>      ))}
+
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">
+                {element?.title}
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400 line-clamp-2">
+                {element?.desc}
+              </p>
+            </div>
+          </div>))}
       </div>
     </div>
   );

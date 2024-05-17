@@ -25,6 +25,7 @@ export default function ReportDialog({
         if (comment.trim() !== '') {
             onClick(comment);
         }
+        window.location.reload();
     };
 
     return (

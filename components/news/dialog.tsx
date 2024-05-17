@@ -48,12 +48,10 @@ export default function NewsDialog({
       setFileUrl(null);
       setSuccessMessage("News created successfully");
 
-      // Redirect to news section
       window.location.reload();
 
     } catch (error) {
       console.error("Error during news creation:", error);
-      // You can handle errors here, e.g., display an error message
     }
   };
 

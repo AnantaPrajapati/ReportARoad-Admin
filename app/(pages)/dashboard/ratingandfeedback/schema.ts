@@ -5,7 +5,7 @@ const RatingSchema =  new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     images: [String], 
     location: String,
-    rating: Number,    
+    Rating: Number,    
     feedback: String,
 }, { timestamps: true });
 

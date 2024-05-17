@@ -30,6 +30,7 @@ export default function UserDialog({ buttonLabel,
         if (comment.trim() !== '') {
             onClick(comment);
         }
+        window.location.reload();
     };
 
     return (
