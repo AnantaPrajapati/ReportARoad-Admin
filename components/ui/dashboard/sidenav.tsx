@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { Button } from '../button';
 export default function SideNav() {
 
+    const role = window.localStorage.getItem("role");
+    const isGovernment = role == "Government" ? true: false;
+
     return (
         <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40 h-screen">
             <div className="flex h-full max-h-screen flex-col gap-2">
@@ -26,13 +29,13 @@ export default function SideNav() {
                             <HomeIcon className="h-4 w-4" />
                             Home
                         </Link>
-                        <Link
+                      {!isGovernment && (<Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/users"
                         >
                             <UsersIcon className="h-4 w-4" />
                             Users
-                        </Link>
+                        </Link>)} 
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/reports"

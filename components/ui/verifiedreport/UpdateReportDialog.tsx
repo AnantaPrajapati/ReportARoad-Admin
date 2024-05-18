@@ -31,10 +31,12 @@ export default function UpdateDialog({
   const [desc, setDescription] = useState("");
   const [images, setImage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   // const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(""); 
     try {
       if (!fileUrl) {
         console.error("No file uploaded");
@@ -135,7 +137,10 @@ export default function UpdateDialog({
           </DialogFooter>
         </form>
         {successMessage && (
-          <div className="text-blue-600">{successMessage}</div>
+          <div className="text-green-600">{successMessage}</div>
+        )}
+        {errorMessage && (
+          <div className="text-red-600">{errorMessage}</div>
         )}
       </DialogContent>
     </Dialog>

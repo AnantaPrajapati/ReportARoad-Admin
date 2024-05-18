@@ -13,8 +13,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginValidation } from "@/app/lib/action";
 
-export default function LoginPage(props: any) {
-  const { loginData } = props;
+export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -23,14 +22,16 @@ export default function LoginPage(props: any) {
 
 
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async(e: any) => {
     e.preventDefault();
-    const usr = loginValidation(formData.email,formData.password);
-    if(!usr){
-      console.error("Invalid Email or Passwords!!")
+    const usr: any = await loginValidation(formData.email,formData.password);
+    const userInfo = JSON.parse(usr);
+    if(!userInfo){
+      alert("Invalid Email or Passwords!!")
     }else{
-      alert("Logged in Successfully!!")
-      router.push("/dashboard");
+      router.push(`/dashboard`);
+      window.localStorage.setItem("role", userInfo.role);
+      window.localStorage.setItem("userID", userInfo._id);
     }
   };
 

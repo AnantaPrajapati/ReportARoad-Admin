@@ -31,18 +31,16 @@ export default function AssignReportDialog({
   const [status, setStatus] = useState("");
   // const [image, setImage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      if (!image) {
-        console.error("No file uploaded");
-        return;
-      }
-      
-
-
+    if (!manpower || !budget || !time || !status || !image) {
+      setErrorMessage('All fields are required and at least one image must be uploaded.');
+      return;
+    }
+    try {   
       await AssignReport(manpower, budget, time, status, image );
       setManpower("");
       setBudget("");
@@ -51,10 +49,11 @@ export default function AssignReportDialog({
       setStatus("");
       setFile(null);
       setFileUrl(null);
-      setSuccessMessage("News created successfully");
+      setSuccessMessage("Report Assigned successfully");
+      setErrorMessage('');
 
-      // Redirect to news section
-      window.location.reload();
+ 
+      // window.location.reload();
 
     } catch (error) {
       console.error("Error during news creation:", error);
@@ -147,6 +146,9 @@ export default function AssignReportDialog({
             <Button>{buttonLabel} </Button>
           </DialogFooter>
         </form>
+        {errorMessage && (
+          <div className="text-red-500 mt-2">{errorMessage}</div>
+        )}
         {successMessage && (
           <div className="text-Blue-600">{successMessage}</div>
         )}

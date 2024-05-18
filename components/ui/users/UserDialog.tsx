@@ -19,17 +19,24 @@ export default function UserDialog({ buttonLabel,
     status: boolean;
 }) {
     const [comment, setComment] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const variant = buttonLabel === 'Approve' ? 'default' : 'destructive';
 
     const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(event.target.value);
+        if (errorMessage) {
+            setErrorMessage('');
+        }
+
     };
 
     const handleButtonClick = () => {
         if (comment.trim() !== '') {
-            onClick(comment);
+            setErrorMessage('Comment is missing.');
+            return;
         }
+        onClick(comment);
         window.location.reload();
     };
 
@@ -52,6 +59,9 @@ export default function UserDialog({ buttonLabel,
                             value={comment}
                             onChange={handleCommentChange}
                         />
+                        {errorMessage && (
+                            <div className="text-red-500 mt-2">{errorMessage}</div>
+                        )}
                     </div>
                 </div>
                 <DialogFooter className="justify-between">

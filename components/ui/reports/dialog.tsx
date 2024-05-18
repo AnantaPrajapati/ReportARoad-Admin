@@ -14,17 +14,24 @@ export default function ReportDialog({
     status: boolean;
 }) {
     const [comment, setComment] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const variant = buttonLabel === 'Approve' ? 'default' : 'destructive';
 
     const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(event.target.value);
+        if (errorMessage) {
+            setErrorMessage(''); 
+        }
     };
 
     const handleButtonClick = () => {
-        if (comment.trim() !== '') {
-            onClick(comment);
+        if (comment.trim() == '') {
+            setErrorMessage('Comment is missing.');
+            return;
+            
         }
+        onClick(comment);
         window.location.reload();
     };
 
@@ -47,6 +54,7 @@ export default function ReportDialog({
                             value={comment}
                             onChange={handleCommentChange}
                         />
+                         {errorMessage && <p className="text-red-500">{errorMessage}</p>} 
                     </div>
                 </div>
                 <DialogFooter className="justify-between">

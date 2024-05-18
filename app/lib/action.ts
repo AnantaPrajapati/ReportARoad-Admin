@@ -1,7 +1,9 @@
+"use server"
 import { Report } from "@/app/lib/schema";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { Signup } from "../(pages)/dashboard/users/schema";
+import bcrypt from 'bcrypt';
 
 export async function getReports () {
     await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
@@ -54,11 +56,17 @@ try{
 export async function loginValidation(email:string,password:string) {
   await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
   const user:any = await Signup.findOne({ email: email }); 
+  console.log("find user",user);
+
+  console.log("password" ,password, user.password );
   if(!user)
     return null;
-  if(user?.password === password){
-    return user;
-  }else{
+  const isMatch = await bcrypt.compare(password,  user.password);
+  if (isMatch){
+    return JSON.stringify(user);
+  }
+  else{
     return null;
   }
+
 }

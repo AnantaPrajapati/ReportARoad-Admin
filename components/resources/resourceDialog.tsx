@@ -31,15 +31,16 @@ export default function ResourceDialog({
   const [time, setTime] = useState("");
   const [image, setImage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   // const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!time || !fileUrl) {
+      setErrorMessage('Time and image are required.');
+      return;
+    }
     try {
-      if (!fileUrl) {
-        console.error("No file uploaded");
-        return;
-      }
       const newData = {time, images:fileUrl, }
 
       await updateResourceReport(reportId, newData);
@@ -48,12 +49,14 @@ export default function ResourceDialog({
       setFile(null);
       setFileUrl(null);
       setSuccessMessage("Report updated successfully");
+      setErrorMessage('');
 
       // Redirect to news section
       // router.push("/dashboard/news");
 
     } catch (error) {
       console.error("Error during news creation:", error);
+      setErrorMessage('Failed to update the report. Please try again.');
     }
   };
 
@@ -134,6 +137,9 @@ export default function ResourceDialog({
             <Button>{buttonLabel} </Button>
           </DialogFooter>
         </form>
+        {errorMessage && (
+          <div className="text-red-500 mt-2">{errorMessage}</div>
+        )}
         {successMessage && (
           <div className="text-blue-600">{successMessage}</div>
         )}
