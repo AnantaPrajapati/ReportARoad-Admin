@@ -1,32 +1,37 @@
 "use client"
-import { Package2Icon, BellIcon, HomeIcon, UsersIcon, FileTextIcon, NewspaperIcon } from 'lucide-react';
+import { Package2Icon, BellIcon, HomeIcon, UsersIcon, FileTextIcon, NewspaperIcon , MessageCircleWarning , ShieldCheck , MessageSquareMore, Shovel , FileWarning, LogOut  } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '../button';
+
+
+// import {signOut } from "next-auth/react";
 export default function SideNav() {
 
     const role = window.localStorage.getItem("role");
     const isGovernment = role == "Government" ? true: false;
+    const isAdmin = role == "Admin" ? true: false;
 
     return (
-        <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40 h-screen">
+        <div className="hidden border-r bg-#2C75FF-100/40 lg:block dark:bg-gray-800/40 h-screen">
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="flex h-[60px] items-center border-b px-6">
                     <Link className="flex items-center gap-2 font-semibold" href="#">
                         <Package2Icon className="h-6 w-6" />
-                        <span className="">ReportARoad</span>
+                        <span className="text-3xl">ReportARoad</span>
                     </Link>
-                    <Button className="ml-auto h-8 w-8" size="icon" variant="outline">
+                    {/* <Button className="ml-auto h-8 w-8" size="icon" variant="outline">
                         <BellIcon className="h-4 w-4" />
                         <span className="sr-only">Toggle notifications</span>
-                    </Button>
+                    </Button> */}
                 </div>
+               
                 <div className="flex-1 overflow-auto py-2">
                     <nav className="grid items-start px-4 text-sm font-medium">
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
                             href="/dashboard"
                         >
-                            <HomeIcon className="h-4 w-4" />
+                            <HomeIcon className="h-4 w-4 " />
                             Home
                         </Link>
                       {!isGovernment && (<Link
@@ -36,50 +41,65 @@ export default function SideNav() {
                             <UsersIcon className="h-4 w-4" />
                             Users
                         </Link>)} 
-                        <Link
+                       {!isAdmin && (<Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/reports"
                         >
-                            <FileTextIcon className="h-4 w-4" />
+                            <FileWarning  className="h-4 w-4" />
                             Reports
-                        </Link>
+                        </Link>)}
                         <Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/IncidentReport"
                         >
-                            <FileTextIcon className="h-4 w-4" />
+                            <MessageCircleWarning className="h-4 w-4" />
                             Incident Reports
                         </Link>
-                        <Link
+                        {!isAdmin &&(<Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/news"
                         >
                             <NewspaperIcon className="h-4 w-4" />
                             News
-                        </Link>
-                        <Link
+                        </Link>)}
+                        {!isAdmin &&(<Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/verifiedreport"
                         >
-                            <FileTextIcon className="h-4 w-4" />
+                            <ShieldCheck  className="h-4 w-4" />
                             Verified Report
-                        </Link>
-                        <Link
+                        </Link>)}
+                        {!isAdmin &&(<Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/ratingandfeedback"
                         >
-                            <NewspaperIcon className="h-4 w-4" />
+                            <MessageSquareMore  className="h-4 w-4" />
                             Ratings and feedback
-                        </Link>
-                        <Link
+                        </Link>)}
+                        {!isAdmin &&(<Link
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
                             href="/dashboard/resources"
                         >
-                            <NewspaperIcon className="h-4 w-4" />
+                            <Shovel  className="h-4 w-4" />
                             Manage Resources
+                        </Link>)}
+                        <Link
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                            href="/"
+                        >
+                            <LogOut className="h-4 w-4" />
+                           Logout
                         </Link>
                     </nav>
-                </div>
+                    </div>
+                {/* <div className="flex justify-center">
+                    <Button
+                        // onClick={() => signOut()}
+                        className="flex items-center gap-3 rounded-lg px-4 py-2 text-lg text-white bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 transition-all"
+                    >
+                        Logout
+                    </Button>
+                </div> */}
             </div>
         </div>
     );

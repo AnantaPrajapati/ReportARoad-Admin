@@ -1,5 +1,4 @@
-"use client"
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DialogTrigger,
@@ -10,61 +9,50 @@ import {
   Dialog,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import createNews, { getNews } from '@/app/(pages)/dashboard/news/action';
-import { useRouter } from 'next/router';
 import { upload } from '@/components/ImageUpload/page';
-import { updateReport } from '@/app/(pages)/dashboard/verifiedreport/action';
 
 export default function UpdateDialog({
+  onClick,
   buttonLabel,
-  reportId, 
+  status
 }: {
   buttonLabel: string,
-  reportId: string,
-
+  onClick: (images: string, desc: string) => void;
+  status: boolean;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [desc, setDescription] = useState("");
   const [images, setImage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  // const router = useRouter();
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrorMessage(""); 
-    try {
-      if (!fileUrl) {
-        console.error("No file uploaded");
-        return;
-      }
-      const newData = {desc, images:fileUrl, status: "resolved"}
-
-      await updateReport(reportId, newData);
-      setDescription("");
-      setImage("");
-      setFile(null);
-      setFileUrl(null);
-      setSuccessMessage("Report updated successfully");
-
-      // Redirect to news section
-      // router.push("/dashboard/news");
-
-    } catch (error) {
-      console.error("Error during news creation:", error);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!desc || !fileUrl) {
+      setErrorMessage("Please fill in the description or upload at least one image");
+      return;
     }
+
+    onClick(fileUrl, desc);
+    setSuccessMessage('Report has been updated');
+    setDescription('');
+    setFile(null);
+    setFileUrl(null);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      const fileUrl = await upload(selectedFile);
+      const uploadedFileUrl = await upload(selectedFile);
       setFile(selectedFile);
-      setFileUrl(fileUrl);
+      setFileUrl(uploadedFileUrl);
     } else {
       console.log("No file selected");
     }
@@ -87,26 +75,6 @@ export default function UpdateDialog({
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              {/* <Label htmlFor="title">Description</Label>
-              <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                type="text"
-                className=""
-                id="title"
-                placeholder="News Title"
-              />
-
-              <Label htmlFor="title">Image</Label>
-              <Input
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                type="text"
-                className=""
-                id="location"
-                placeholder="Location"
-              /> */}
-
               <Label htmlFor="Description">Description</Label>
               <Input
                 value={desc}
@@ -117,10 +85,19 @@ export default function UpdateDialog({
               />
 
               <Label htmlFor="image">Upload Image</Label>
-              <Input type="file" accept="image/*, video/*" className="" id="file" onChange={(e) => { setImage(e.target.value); handleFileUpload(e); }} />
+              <Input
+                type="file"
+                accept="image/*, video/*"
+                className=""
+                id="file"
+                onChange={(e) => {
+                  setImage(e.target.value);
+                  handleFileUpload(e);
+                }}
+              />
               {fileUrl && file && (
                 <div style={{ position: 'relative' }}>
-                  <button className="absolute top-2 right-2" onClick={handleFileClear}>
+                  <button type="button" className="absolute top-2 right-2" onClick={handleFileClear}>
                     <AiOutlineCloseCircle size={24} />
                   </button>
                   {file.type.startsWith('image') ? (
@@ -133,7 +110,7 @@ export default function UpdateDialog({
             </div>
           </div>
           <DialogFooter className="justify-between">
-            <Button>{buttonLabel} </Button>
+            <Button type="submit">{buttonLabel}</Button>
           </DialogFooter>
         </form>
         {successMessage && (

@@ -1,5 +1,5 @@
-"use client"
-import { useState, ChangeEvent } from 'react';
+
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DialogTrigger,
@@ -19,29 +19,33 @@ import { upload } from '@/components/ImageUpload/page';
 import AssignReport from '@/app/(pages)/dashboard/verifiedreport/action';
 
 export default function AssignReportDialog({
+  onClick,
   buttonLabel,
+  status
 }: {
   buttonLabel: string,
+  onClick: (image: string, manpower: string, budget:string, time:string, statuss: String) => void;
+  status: boolean;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [image, setFileUrl] = useState<string | null>(null);
   const [manpower, setManpower] = useState("");
   const [budget, setBudget] = useState("");
   const [time, setTime] = useState("");
-  const [status, setStatus] = useState("");
+  const [statuss, setStatus] = useState("");
   // const [image, setImage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!manpower || !budget || !time || !status || !image) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) =>{
+    event.preventDefault();
+    if (!manpower || !budget || !time || !statuss || !image) {
       setErrorMessage('All fields are required and at least one image must be uploaded.');
       return;
-    }
-    try {   
-      await AssignReport(manpower, budget, time, status, image );
+    } 
+      onClick(manpower, budget, time, statuss, image );
+      setSuccessMessage('Report has been updated');
       setManpower("");
       setBudget("");
       setFileUrl("");
@@ -49,16 +53,12 @@ export default function AssignReportDialog({
       setStatus("");
       setFile(null);
       setFileUrl(null);
-      setSuccessMessage("Report Assigned successfully");
-      setErrorMessage('');
+    
 
- 
-      // window.location.reload();
-
-    } catch (error) {
-      console.error("Error during news creation:", error);
-    }
-  };
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    };
 
   const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -118,7 +118,7 @@ export default function AssignReportDialog({
               />
               <Label htmlFor="Status">Status</Label>
               <Input
-                value={status}
+                value={statuss}
                 onChange={(e) => setStatus(e.target.value)}
                 type="text"
                 className=""

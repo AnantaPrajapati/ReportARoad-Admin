@@ -6,6 +6,7 @@
 import NewsDialog from "@/components/news/dialog";
 import Image from "next/image";
 import { getNews } from "./action";
+import DeleteNewsDialog from "@/components/news/deletedialog";
 // import { useEffect } from "react";
 // import mongoose from "mongoose";
 // import { News } from "./schema";
@@ -13,6 +14,7 @@ import { getNews } from "./action";
 export default async function Page() {
   // const [data, setData] = useState();
   const news = await getNews();
+  console.log("news", news);
 
 
   return (
@@ -60,10 +62,11 @@ export default async function Page() {
               <h3 className="text-lg font-semibold mb-2">
                 {element?.title}
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 line-clamp-2">
+              <p className="text-gray-500 dark:text-gray-400 line-clamp-b 2">
                 {element?.desc}
               </p>
             </div>
+            <DeleteNewsDialog buttonLabel="Delete" _id={element?._id} />
           </div>))}
       </div>
     </div>

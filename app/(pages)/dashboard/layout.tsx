@@ -1,7 +1,14 @@
-
+"use client"
 import SideNav from "@/components/ui/dashboard/sidenav"
+import { useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+    const userID = window.localStorage.getItem("userID")
+    if(!userID){
+        const router = useRouter();
+        router.replace("/");
+        return;
+    }
 
     return (
         <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">

@@ -1,3 +1,4 @@
+"use client"
 /**
  * v0 by Vercel.
  * @see https://v0.dev/t/bW7UMdyfsuD
@@ -26,8 +27,18 @@ import ReportDialog from "@/components/ui/reports/dialog";
 import VerifiedReportDialog from "./VerifiedReportDialog";
 import UpdateDialog from "./UpdateReportDialog";
 import AssignReportDialog from "./AssignReport";
+import { useState, useTransition } from "react";
+import { Assign, UpReport } from "@/app/(pages)/dashboard/verifiedreport/action";
 
 export default function VerifiedReportTable(props: any) {
+  const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(isPending)
+
+  const handleClose =()=>{
+     if(isPending){
+         setOpen(false);
+     }
+  }
   const { tableData } = props;
   // console.log("props data are ", tableData)
   return (
@@ -37,6 +48,7 @@ export default function VerifiedReportTable(props: any) {
           <TableHeader>
             <TableRow>
               <TableHead>Report #</TableHead>
+              {/* <TableHead>userId #</TableHead> */}
               <TableHead>Description</TableHead>
               <TableHead>Location</TableHead>
               <TableHead>severity</TableHead>
@@ -51,6 +63,7 @@ export default function VerifiedReportTable(props: any) {
             {tableData?.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
+                {/* <TableCell>{element?.userId}</TableCell> */}
                 <TableCell>{element?.desc}</TableCell>
                 <TableCell>
                   <a
@@ -75,8 +88,8 @@ export default function VerifiedReportTable(props: any) {
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <AssignReportDialog buttonLabel="Assign" />
-                    <UpdateDialog buttonLabel="Update" reportId={element?._id} />
+                    <AssignReportDialog buttonLabel="Assign" onClick={(manpower, budget, time, statuss, image) => startTransition(() => Assign(element?._id, element?.userId, manpower, budget, time, statuss, image))} status={open} />
+                    <UpdateDialog buttonLabel="Update" onClick={(images, desc) => startTransition(() => UpReport(element?._id,element?.userId, images, desc))} status={open}   />
 
                   </div>
                 </TableCell>

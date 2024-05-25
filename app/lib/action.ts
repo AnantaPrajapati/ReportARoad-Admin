@@ -70,3 +70,32 @@ export async function loginValidation(email:string,password:string) {
   }
 
 }
+
+// export async function loginValidation(email:string, password:string) {
+//   try {
+//     await mongoose.connect("mongodb://127.0.0.1:27017/ReportARoad");
+
+//     const user = await Signup.findOne({ email: email });
+
+//     if (!user) {
+//       return null;
+//     }
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+
+//     if (!isMatch) {
+//       return null;
+//     }
+
+//     if (user.role === "admin" || user.role === "government") {
+    
+//       const { password, ...userInfo } = user.toObject();
+//       return JSON.stringify(userInfo);
+//     } else {
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error("Error during login validation:", error);
+//     return null;
+//   }
+// }

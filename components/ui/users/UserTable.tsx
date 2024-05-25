@@ -47,10 +47,10 @@ export default function UserTable(props: any) {
           <TableHeader>
             <TableRow>
               <TableHead>userID</TableHead>
-              <TableHead>FirstName</TableHead>
-              <TableHead>LastName</TableHead>
+              <TableHead>First name</TableHead>
+              <TableHead>Last name</TableHead>
               <TableHead>Username </TableHead>
-              <TableHead>E-mail</TableHead>
+              {/* <TableHead>E-mail</TableHead> */}
               <TableHead>Role</TableHead>
               <TableHead>City</TableHead>
               <TableHead>Verified</TableHead>
@@ -65,7 +65,7 @@ export default function UserTable(props: any) {
                 <TableCell>{element?.firstname}</TableCell>
                 <TableCell>{element?.lastname}</TableCell>
                 <TableCell>{element?.username}</TableCell>
-                <TableCell>{element?.email}</TableCell>
+                {/* <TableCell>{element?.email}</TableCell> */}
                 <TableCell>{element?.role}</TableCell>
                 <TableCell>{element?.city}</TableCell>
                 <TableCell>{element?.verified ? "true" : "false"}</TableCell>
@@ -76,68 +76,6 @@ export default function UserTable(props: any) {
                 </TableCell>
               </TableRow>
             ))}
-
-
-
-            {/* <TableRow>
-              <TableCell>123</TableCell>
-              <TableCell>
-                Pothole on Main Street, causing damage to vehicles. Needs
-                immediate attention.
-              </TableCell>
-              <TableCell>123 Main Street, Anytown USA</TableCell>
-              <TableCell>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden md:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden lg:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-
-              </TableCell>
-            </TableRow> */}
           </TableBody>
         </Table>
         <div className="border-t px-4 py-2">
@@ -182,6 +120,7 @@ export default function UserTable(props: any) {
             </PaginationContent>
           </Pagination>
         </div>
+
       </div>
     </div>
   );

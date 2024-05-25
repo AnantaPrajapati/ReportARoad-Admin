@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { loginValidation } from "@/app/lib/action";
 
 export default function LoginPage() {
+  window.localStorage.removeItem("role");
+  window.localStorage.removeItem("userID");
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -26,10 +28,14 @@ export default function LoginPage() {
     e.preventDefault();
     const usr: any = await loginValidation(formData.email,formData.password);
     const userInfo = JSON.parse(usr);
-    if(!userInfo){
-      alert("Invalid Email or Passwords!!")
-    }else{
-      router.push(`/dashboard`);
+    if (!userInfo) {
+      // setIsError(true);
+    } else if (userInfo?.role === "User") {
+      // setIsError(true);
+      alert("User cannot log in to admin pannel,Sorry");
+    } else {
+      // setIsSuccess(true);
+      router.push(`/dashboard?userID=${userInfo._id}`);
       window.localStorage.setItem("role", userInfo.role);
       window.localStorage.setItem("userID", userInfo._id);
     }
@@ -67,12 +73,12 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
+              {/* <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
                 <Link className="text-sm font-medium underline" href="#">
                   Forgot password?
                 </Link>
-              </div>
+              </div> */}
               <Input
                 id="password"
                 required

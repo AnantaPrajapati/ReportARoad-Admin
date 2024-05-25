@@ -51,7 +51,7 @@ export default function ReportTable(props: any) {
           <TableHeader>
             <TableRow>
               <TableHead>Report #</TableHead>
-              <TableHead>userId</TableHead>
+              {/* <TableHead>userId</TableHead> */}
               <TableHead>Description</TableHead>
               <TableHead>Location</TableHead>
               <TableHead>severity</TableHead>
@@ -66,7 +66,7 @@ export default function ReportTable(props: any) {
             {tableData?.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
-                <TableCell>{element?.userId}</TableCell>
+                {/* <TableCell>{element?.userId}</TableCell> */}
                 <TableCell>{element?.desc}</TableCell>
                 <TableCell>
                   <a
@@ -108,6 +108,48 @@ export default function ReportTable(props: any) {
             ))}
           </TableBody>
         </Table>
+        <div className="border-t px-4 py-2">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  className="hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-300 dark:active:bg-gray-700 rounded-md px-2 py-1 transition-colors"
+                  href="#"
+                />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink
+                  className="hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-300 dark:active:bg-gray-700 rounded-md px-2 py-1 transition-colors"
+                  href="#"
+                >
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink
+                  className="bg-gray-200 dark:bg-gray-800 rounded-md px-2 py-1 transition-colors"
+                  href="#"
+                >
+                  2
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink
+                  className="hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-300 dark:active:bg-gray-700 rounded-md px-2 py-1 transition-colors"
+                  href="#"
+                >
+                  3
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext
+                  className="hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-300 dark:active:bg-gray-700 rounded-md px-2 py-1 transition-colors"
+                  href="#"
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       </div>
     </div>
   );

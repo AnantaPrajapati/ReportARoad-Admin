@@ -29,16 +29,17 @@ export default function NewsDialog({
   const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      if (!fileUrl) {
-        console.error("No file uploaded");
-        return;
-      }
-
+    if (!fileUrl || !title || !description || !location) {
+      setErrorMessage('All fields are required and at least one image must be uploaded.');
+      return;
+    }
+    try 
+{
       await createNews(title, fileUrl, description, location);
       setTitle("");
       setDescription("");
@@ -47,8 +48,13 @@ export default function NewsDialog({
       setFile(null);
       setFileUrl(null);
       setSuccessMessage("News created successfully");
+      setErrorMessage('');
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+  
 
-      window.location.reload();
+      // window.location.reload();
 
     } catch (error) {
       console.error("Error during news creation:", error);
@@ -132,6 +138,9 @@ export default function NewsDialog({
             <Button>{buttonLabel} </Button>
           </DialogFooter>
         </form>
+        {errorMessage && (
+          <div className="text-red-500 mt-2">{errorMessage}</div>
+        )}
         {successMessage && (
           <div className="text-green-600">{successMessage}</div>
         )}

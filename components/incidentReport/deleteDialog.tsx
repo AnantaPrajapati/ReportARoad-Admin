@@ -1,11 +1,16 @@
+/**
+ * v0 by Vercel.
+ * @see https://v0.dev/t/F2TL4bjscaC
+ * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+ */
+import { Button } from "@/components/ui/button"
+import { DialogTrigger, DialogTitle, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog"
 import { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { DialogTrigger, DialogTitle, DialogHeader, DialogFooter, DialogContent, Dialog } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
-export default function ReportDialog({
-    buttonLabel,
+
+export default function DeleteIncident({ buttonLabel,
     onClick,
     status,
 }: {
@@ -37,7 +42,7 @@ export default function ReportDialog({
         } else {
             onClick(comment);
             setErrorMessage('');
-            setSuccessMessage('Success');
+            setSuccessMessage('Incident deleted successfully');
             setComment(''); 
             setTimeout(() => {
                 setSuccessMessage('');
@@ -53,21 +58,23 @@ export default function ReportDialog({
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>{buttonLabel} Report</DialogTitle>
+                    <DialogTitle>{buttonLabel} Message</DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid gap-2">
-                        <Label htmlFor="comment">Comment</Label>
+                        <Label htmlFor="message">Message</Label>
                         <Textarea
                             className="min-h-[100px]"
-                            id="comment"
-                            placeholder="Add a comment (optional)"
+                            id="message"
+                            placeholder="Add a message"
                             value={comment}
                             onChange={handleCommentChange}
                         />
-                        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+                        {errorMessage && (
+                            <div className="text-red-500 mt-2">{errorMessage}</div>
+                        )}
                         {successMessage && (
-                            <div className="text-blue-600">{successMessage}</div>
+                            <div className="text-green-500 mt-2">{successMessage}</div>
                         )}
                     </div>
                 </div>

@@ -20,6 +20,7 @@ export default function UserDialog({ buttonLabel,
 }) {
     const [comment, setComment] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const variant = buttonLabel === 'Approve' ? 'default' : 'destructive';
 
@@ -28,16 +29,26 @@ export default function UserDialog({ buttonLabel,
         if (errorMessage) {
             setErrorMessage('');
         }
+        if (successMessage) {
+            setSuccessMessage('');
+        }
 
     };
 
     const handleButtonClick = () => {
-        if (comment.trim() !== '') {
-            setErrorMessage('Comment is missing.');
-            return;
+        if (comment.trim() === '') {
+            setErrorMessage('Comment cannot be empty');
+            setSuccessMessage('');
+        } else {
+            onClick(comment);
+            setErrorMessage('');
+            setSuccessMessage('User deleted successfully');
+            setComment(''); 
+            setTimeout(() => {
+                setSuccessMessage('');
+                window.location.reload();
+            }, 2000);  
         }
-        onClick(comment);
-        window.location.reload();
     };
 
     return (
@@ -61,6 +72,9 @@ export default function UserDialog({ buttonLabel,
                         />
                         {errorMessage && (
                             <div className="text-red-500 mt-2">{errorMessage}</div>
+                        )}
+                        {successMessage && (
+                            <div className="text-green-500 mt-2">{successMessage}</div>
                         )}
                     </div>
                 </div>

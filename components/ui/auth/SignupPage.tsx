@@ -26,16 +26,17 @@ export default function SignupPage() {
     const [city, setCity] = useState("");
     const router = useRouter();
 
-    const handleSubmit= async (e: React.FormEvent<HTMLFormElement>) =>{
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            
-         await submit(email, firstname, lastname, username, password, cpassword, role, city);
-         router.push("/dashboard")
+
+            await submit(email, firstname, lastname, username, password, cpassword, role, city);
+            router.push("/")
         } catch (error) {
             console.error("Error during signup:", error);
         }
     };
+
 
     return (
         <div key="1" className="grid w-full grid-cols-1 lg:grid-cols-2 lg:min-h-[800px]">
@@ -88,7 +89,7 @@ export default function SignupPage() {
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input onChange={(e) => setEmail(e.target.value)}id="email" placeholder="m@example.com" required type="email" />
+                            <Input onChange={(e) => setEmail(e.target.value)} id="email" placeholder="m@example.com" required type="email" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
@@ -100,29 +101,19 @@ export default function SignupPage() {
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="role">Role</Label>
-                            <Select  defaultValue="user" required>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select a role" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="admin">Admin</SelectItem>
-                                    <SelectItem value="user">User</SelectItem>
-                                    <SelectItem value="government-official">Government Official</SelectItem>
-                                </SelectContent>
-                            </Select>
+                            <select value={role} onChange={(e) => setRole(e.target.value)} required className="w-full px-3 py-2 border rounded">
+                                <option value="Admin">Admin</option>
+                                <option value="User">User</option>
+                                <option value="Government">Government</option>
+                            </select>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="City">City</Label>
-                            <Select defaultValue="kathmandu" required>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select a role" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="Kathmandu">Kathmandu</SelectItem>
-                                    <SelectItem value="Bhaktapur">Bhaktapur</SelectItem>
-                                    <SelectItem value="Lalitpur">lalitpur</SelectItem>
-                                </SelectContent>
-                            </Select>
+                            <Label htmlFor="city">City</Label>
+                            <select value={city} onChange={(e) => setCity(e.target.value)} required className="w-full px-3 py-2 border rounded">
+                                <option value="Kathmandu">Kathmandu</option>
+                                <option value="Bhaktapur">Bhaktapur</option>
+                                <option value="Lalitpur">Lalitpur</option>
+                            </select>
                         </div>
 
                         {/* {

@@ -4,7 +4,6 @@
  * @see https://v0.dev/t/bW7UMdyfsuD
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   TableHead,
@@ -23,13 +22,12 @@ import {
   Pagination,
 } from "@/components/ui/pagination";
 import Image from "next/image";
-import ReportDialog from "@/components/ui/reports/dialog";
-import approveReport, { disapproveReport } from "@/app/lib/action";
 import { useState, useTransition } from "react";
 import { comment } from "postcss";
 import notifyUser from "@/app/(pages)/dashboard/IncidentReport/action";
 import ResourceDialog from "./resourceDialog";
-
+import { DeleteResource, UpResourceReport } from "@/app/(pages)/dashboard/verifiedreport/action";
+import DeleteDialog from "./deleteDialog";
 
 
 
@@ -53,6 +51,7 @@ export default function ResourceTable(props: any) {
           <TableHeader>
             <TableRow>
               <TableHead>Report</TableHead>
+              {/* <TableHead>User</TableHead> */}
               <TableHead>Manpower</TableHead>
               <TableHead>Budget</TableHead>
               <TableHead>Time</TableHead>
@@ -67,6 +66,7 @@ export default function ResourceTable(props: any) {
             {tableData?.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
+                {/* <TableCell>{element?.userId}</TableCell> */}
                 <TableCell>{element?.manpower}</TableCell>
                 <TableCell>{element?.budget}</TableCell>
                 {/* <TableCell>
@@ -80,7 +80,7 @@ export default function ResourceTable(props: any) {
                   </a>
                 </TableCell> */}
                 <TableCell>{element?.time}</TableCell>
-                <TableCell>{element?.status}</TableCell>
+                <TableCell>{element?.statuss}</TableCell>
                 {/* <TableCell>{element?.image}</TableCell> */}
                 <TableCell>
                   <div className="flex space-x-4">
@@ -94,75 +94,14 @@ export default function ResourceTable(props: any) {
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                  <ResourceDialog buttonLabel="Update" reportId={element?._id} />
+                  <ResourceDialog buttonLabel="Update" onClick={( time,statuss, image ) => startTransition(() => UpResourceReport(element?._id, element?.userId, time, statuss,image ))} status={open}/>
+                  <DeleteDialog buttonLabel="Delete" onClick={(comment)=>startTransition(()=>DeleteResource(element?._id, comment))} status={open} />
                   </div>
                 </TableCell>
               </TableRow>
             ))}
-
-
-
-            {/* <TableRow>
-              <TableCell>123</TableCell>
-              <TableCell>
-                Pothole on Main Street, causing damage to vehicles. Needs
-                immediate attention.
-              </TableCell>
-              <TableCell>123 Main Street, Anytown USA</TableCell>
-              <TableCell>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden md:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden lg:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-
-              </TableCell>
-            </TableRow> */}
           </TableBody>
-        </Table>
+        </Table> 
         <div className="border-t px-4 py-2">
           <Pagination>
             <PaginationContent>

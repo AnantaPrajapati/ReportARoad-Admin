@@ -27,8 +27,9 @@ import ReportDialog from "@/components/ui/reports/dialog";
 import approveReport, { disapproveReport } from "@/app/lib/action";
 import { useState, useTransition } from "react";
 import { comment } from "postcss";
-import notifyUser from "@/app/(pages)/dashboard/IncidentReport/action";
+import notifyUser, { Deleteincident } from "@/app/(pages)/dashboard/IncidentReport/action";
 import IncidentReportDialog from "./incidentReportDialog";
+import DeleteIncident from "./deleteDialog";
 
 
 
@@ -53,10 +54,11 @@ export default function IncidentReportTable(props: any) {
           <TableHeader>
             <TableRow>
               <TableHead>Report #</TableHead>
-              <TableHead>userId</TableHead>
+              {/* <TableHead>userId</TableHead> */}
               <TableHead>Description</TableHead>
               <TableHead>Location</TableHead>
               <TableHead>Title</TableHead>
+              <TableHead>Time</TableHead>
               <TableHead>Image</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -67,7 +69,7 @@ export default function IncidentReportTable(props: any) {
             {tableData?.map((element: any) => (
               <TableRow key={element?._id}>
                 <TableCell>{element?._id}</TableCell>
-                <TableCell>{element?.userId}</TableCell>
+                {/* <TableCell>{element?.userId}</TableCell> */}
                 <TableCell>{element?.desc}</TableCell>
                 <TableCell>
                   <a
@@ -80,6 +82,7 @@ export default function IncidentReportTable(props: any) {
                   </a>
                 </TableCell>
                 <TableCell>{element?.title}</TableCell>
+                <TableCell>{element?.time}</TableCell>
                 {/* <TableCell>{element?.image}</TableCell> */}
                 <TableCell>
                   <div className="flex space-x-4">
@@ -99,74 +102,13 @@ export default function IncidentReportTable(props: any) {
                 </TableCell>
                 <TableCell>
                   <div className="flex justify-end gap-2">
-                    <IncidentReportDialog buttonLabel="Message" onClick={(comment)=>startTransition(()=>notifyUser(element?._id, comment))} status={open}
+                    <IncidentReportDialog buttonLabel="Message" onClick={(comment, image)=>startTransition(()=>notifyUser(element?._id, element?.userId, image, comment))} status={open}
                      />
+                       <DeleteIncident buttonLabel="Delete" onClick={(comment)=>startTransition(()=>Deleteincident(element?._id, comment))} status={open} />
                   </div>
                 </TableCell>
               </TableRow>
             ))}
-
-
-
-            {/* <TableRow>
-              <TableCell>123</TableCell>
-              <TableCell>
-                Pothole on Main Street, causing damage to vehicles. Needs
-                immediate attention.
-              </TableCell>
-              <TableCell>123 Main Street, Anytown USA</TableCell>
-              <TableCell>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden md:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                  <Image
-                    alt="Report Image"
-                    className="rounded-md hidden lg:block"
-                    height={100}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "150/100",
-                      objectFit: "cover",
-                    }}
-                    width={150}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-
-              </TableCell>
-            </TableRow> */}
           </TableBody>
         </Table>
         <div className="border-t px-4 py-2">

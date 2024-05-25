@@ -42,7 +42,7 @@ export async function userExist(email: String) {
 }
 
 
-export async function submit(email: String, firstname: String, lastname: String, username: String, password: String, Cpassword: String, role: String, city: String) {
+export async function  submit(email: String, firstname: String, lastname: String, username: String, password: String, Cpassword: String, role: String, city: String) {
 console.log("submit")
   try {
     console.log("Submitting signup form...");
